@@ -17,14 +17,21 @@
 
 package mcprol.log4j;
 
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
 import org.apache.log4j.helpers.FormattingInfo;
 import org.apache.log4j.helpers.LogLog;
 import org.apache.log4j.helpers.PatternConverter;
 import org.apache.log4j.spi.LoggingEvent;
+
+import mcprol.java.monitor.JavaMonitor;
 
 public class PatternParser extends org.apache.log4j.helpers.PatternParser {
 	
@@ -57,6 +64,18 @@ public class PatternParser extends org.apache.log4j.helpers.PatternParser {
 	    case 'D':
 	        pc = new DefinePatternConverter(formattingInfo,  extractOption());
 	        //LogLog.debug("DEFINE converter.");
+	        //formattingInfo.dump();
+	        currentLiteral.setLength(0);
+	        break;
+	    case 'J':
+	        pc = new JMXPatternConverter(formattingInfo,  extractOption());
+	        //LogLog.debug("DEFINE converter.");
+	        //formattingInfo.dump();
+	        currentLiteral.setLength(0);
+	        break;
+	    case 'S':
+	        pc = new SystemPatternConverter(formattingInfo,  extractOption());
+	        //LogLog.debug("SYSTEM converter.");
 	        //formattingInfo.dump();
 	        currentLiteral.setLength(0);
 	        break;
@@ -94,42 +113,42 @@ public class PatternParser extends org.apache.log4j.helpers.PatternParser {
 	private String getPatternConverterKey(char c) {
 		String key = String.valueOf(c);
 
-		if ('X' == c || 'D' == c) {
+		if ('X' == c || 'D' == c || 'S' == c || 'J' == c) {
 			key = currentOption;
 		} else {
 			switch (c) {
 			case 'c':
-				key = "Category";
+				key = "category";
 				break;
 			case 'C':
-				key = "ClassName";
+				key = "className";
 				break;
 			case 'd':
-				key = "Date";
+				key = "date";
 				break;
 			case 'F':
-				key = "FileLocation";
+				key = "fileLocation";
 				break;
 			case 'l':
-				key = "FullLocation";
+				key = "fullLocation";
 				break;
 			case 'L':
-				key = "LineLocation";
+				key = "lineLocation";
 				break;
 			case 'm':
-				key = "Message";
+				key = "message";
 				break;
 			case 'M':
-				key = "MethodLocation";
+				key = "methodLocation";
 				break;
 			case 'p':
-				key = "Level";
+				key = "level";
 				break;
 			case 'r':
-				key = "RelativeTime";
+				key = "relativeTime";
 				break;
 			case 't':
-				key = "Thread";
+				key = "thread";
 				break;
 			case 'x':
 				key = "NDC";
@@ -145,26 +164,6 @@ public class PatternParser extends org.apache.log4j.helpers.PatternParser {
 		return patternConvertersMap.get(pc);
 	}
 		
-	
-	private class DefinePatternConverter extends PatternConverter {
-		private String key;
-	
-		DefinePatternConverter(FormattingInfo formattingInfo, String key) {
-			super(formattingInfo);
-			this.key = key;
-		}
-	
-		public String convert(LoggingEvent event) {
-			String val = null;
-			if (key == null) {
-				val = null;
-			} else {
-				val = System.getProperty(key);
-			}
-			return val;
-		}
-	}
-
 }
 
 

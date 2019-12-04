@@ -17,23 +17,25 @@
 
 package mcprol.log4j;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.MDC;
+import org.apache.log4j.helpers.FormattingInfo;
+import org.apache.log4j.helpers.PatternConverter;
+import org.apache.log4j.spi.LoggingEvent;
 
-public class Log4jTestMain {
-	
-	private final static Logger logger = Logger.getLogger(Log4jTestMain.class);
-		
-	public static void main(String[] args) throws Exception {
-		MDC.put("s", "99999");
-		MDC.put("t", "00000");
-		
-		
-		//logger.info("Running " + Log4jTestMain.class.getName() + "... ");
-		
-		for (int i=0; i<2; i++) {
-			logger.info("iteration " + (i+1));
-			Integer[] ii = new Integer[1000000];
+class DefinePatternConverter extends PatternConverter {
+	private String key;
+
+	DefinePatternConverter(FormattingInfo formattingInfo, String key) {
+		super(formattingInfo);
+		this.key = key;
+	}
+
+	public String convert(LoggingEvent event) {
+		String val = null;
+		if (key == null) {
+			val = null;
+		} else {
+			val = System.getProperty(key);
 		}
+		return val;
 	}
 }

@@ -15,25 +15,27 @@
  * limitations under the License.
  */
 
-package mcprol.log4j;
+/*
+ * some ideas from:
+ *   https://github.com/thmshmm/log4j-json-layout
+ *   https://github.com/michaeltandy/log4j-json 
+ */
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.MDC;
+package mcprol.java.monitor;
 
-public class Log4jTestMain {
+import java.lang.management.ManagementFactory;
+import java.lang.management.OperatingSystemMXBean;
+
+/*
+ * https://docs.oracle.com/javase/8/docs/api/java/lang/management/package-summary.html
+ */
+public class JavaMonitor {
+	public static long getFreeMemory() {
+		return Runtime.getRuntime().freeMemory();
+	}
 	
-	private final static Logger logger = Logger.getLogger(Log4jTestMain.class);
-		
-	public static void main(String[] args) throws Exception {
-		MDC.put("s", "99999");
-		MDC.put("t", "00000");
-		
-		
-		//logger.info("Running " + Log4jTestMain.class.getName() + "... ");
-		
-		for (int i=0; i<2; i++) {
-			logger.info("iteration " + (i+1));
-			Integer[] ii = new Integer[1000000];
-		}
+	public static double getSystemLoadAverage() {
+		OperatingSystemMXBean operatingSystemMXBean = ManagementFactory.getOperatingSystemMXBean();
+		return operatingSystemMXBean.getSystemLoadAverage();
 	}
 }
