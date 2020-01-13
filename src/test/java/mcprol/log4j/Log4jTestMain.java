@@ -28,10 +28,9 @@ public class Log4jTestMain {
 		MDC.put("s", "99999");
 		MDC.put("t", "00000");
 		
-		
 		//logger.info("Running " + Log4jTestMain.class.getName() + "... ");
 		
-		for (int i=0; i<2; i++) {
+		for (int i=0; i<10; i++) {
 			logger.info("iteration " + (i+1));
 			Integer[] ii = new Integer[1000000];
 		}

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package mcprol.log4j;
+package mcprol.log4j.helpers;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package mcprol.log4j;
+package mcprol.log4j.helpers;
 
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;

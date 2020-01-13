@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package mcprol.log4j;
+package mcprol.log4j.helpers;
 
 import org.apache.log4j.helpers.FormattingInfo;
 import org.apache.log4j.helpers.PatternConverter;

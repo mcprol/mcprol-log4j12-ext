@@ -26,6 +26,8 @@ package mcprol.log4j;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import mcprol.log4j.helpers.PatternParser;
+
 import java.util.Iterator;
 import java.util.Set;
 

@@ -17,9 +17,11 @@
 
 package mcprol.log4j;
 
+import mcprol.log4j.helpers.PatternParser;
+
 public class PatternLayout extends org.apache.log4j.PatternLayout {
 	@Override
 	protected PatternParser createPatternParser(String pattern) {
-		return new mcprol.log4j.PatternParser(pattern);
+		return new mcprol.log4j.helpers.PatternParser(pattern);
 	}
 }
